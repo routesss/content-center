@@ -1,10 +1,11 @@
 package com.sola.contentcenter.controller.share;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,22 +38,26 @@ public class ShareController {
     private RestTemplate restTemplate;
     @Autowired
     private IShareService shareService;
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     @RequestMapping("/test")
     public String testInsert() {
 
-        Share share = new Share();
+        List<ServiceInstance> instances = discoveryClient.getInstances("user-center");
+        log.info(JSONObject.toJSONString(instances));
+        /*Share share = new Share();
         share.setTitle("芦荟制作手册");
         share.setBuyCount(2);
         share.setCover("XXX");
         share.setCreateTime(LocalDateTime.now());
         share.setUpdateTime(LocalDateTime.now());
-
+        
         shareService.save(share);
-
+        
         List<Share> list = shareService.list();
         System.out.println(JSONObject.toJSONString(list));
-        log.info("分享信息 : {}", JSONObject.toJSONString(list));
+        log.info("分享信息 : {}", JSONObject.toJSONString(list));*/
 
         return "OK";
     }
