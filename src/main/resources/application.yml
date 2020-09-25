@@ -1,4 +1,10 @@
 spring:
+  application:
+    name: content-center
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/content_center?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
