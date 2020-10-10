@@ -22,12 +22,15 @@ spring:
 server:
   port: 8010
 
+#日志级别配置
 logging:
   level:
     root: info
     com.sola.mybatis_plus_demo.dao.user: trace
+    com.sola.contentcenter.feignClicnet.UserCenterClient: debug
   pattern:
     console: '%p%m%n'
+
 mybatis-plus:
   global-config:
     db-config:
@@ -40,8 +43,15 @@ mybatis-plus:
 #  ribbon:
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
 
-#ribbon饥饿加载
+#ribbon饥饿加载 指定微服务的BalancerRule项目启动时加载
 #ribbon:
 #  eager-load:
 #    enabled: true
 #    clients: user-center
+
+#feign配置
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
