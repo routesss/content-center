@@ -1,11 +1,7 @@
 package com.sola.contentcenter.controller.share;
 
-import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +10,11 @@ import org.springframework.web.client.RestTemplate;
 import com.alibaba.fastjson.JSONObject;
 import com.sola.contentcenter.controller.util.IResult;
 import com.sola.contentcenter.controller.util.Result;
+import com.sola.contentcenter.controller.util.ServiceUriUtil;
 import com.sola.contentcenter.domain.dto.share.ShareDto;
 import com.sola.contentcenter.domain.dto.user.UserDto;
 import com.sola.contentcenter.domain.entity.share.Share;
+import com.sola.contentcenter.feignClicnet.UserCenterClient;
 import com.sola.contentcenter.service.share.IShareService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,13 +37,13 @@ public class ShareController {
     @Autowired
     private IShareService shareService;
     @Autowired
-    private DiscoveryClient discoveryClient;
+    private ServiceUriUtil serviceUriUtil;
+    @Autowired
+    private UserCenterClient userCenterClient;
 
     @RequestMapping("/test")
     public String testInsert() {
 
-        List<ServiceInstance> instances = discoveryClient.getInstances("user-center");
-        log.info(JSONObject.toJSONString(instances));
         /*Share share = new Share();
         share.setTitle("芦荟制作手册");
         share.setBuyCount(2);
@@ -65,10 +63,22 @@ public class ShareController {
     @RequestMapping("/{id}")
     public IResult findShareById(@PathVariable("id") Integer shareId) {
         Share share = shareService.getById(shareId);
-        log.info("分享信息 : {}", JSONObject.toJSONString(share));
+        if (share == null) {
+            return Result.error("分享内容不存在");
+        }
 
-        UserDto userDto =
-            restTemplate.getForObject("http://127.0.0.1:8080/user/{id}", UserDto.class, share.getUserId());
+        /* 1
+        URI uri = serviceUriUtil.getUri("user-center");
+        if (uri == null) {
+            return Result.error("服务不存在");
+        }
+        UserDto userDto = restTemplate.getForObject(uri.toString() + "/user/{id}", UserDto.class, share.getUserId());
+        */
+
+        /*UserDto userDto = restTemplate.getForObject("http://user-center/user/{id}", UserDto.class, share.getUserId());*/
+
+        UserDto userDto = userCenterClient.findById(share.getUserId());
+
         log.info("用户信息 : {}", JSONObject.toJSONString(userDto));
 
         ShareDto shareDto = new ShareDto();
