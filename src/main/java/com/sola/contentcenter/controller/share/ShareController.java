@@ -1,7 +1,9 @@
 package com.sola.contentcenter.controller.share;
 
+import com.sola.contentcenter.feignClicnet.BaiduClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,8 @@ import com.sola.contentcenter.feignClicnet.UserCenterClient;
 import com.sola.contentcenter.service.share.IShareService;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * <p>
@@ -58,6 +62,21 @@ public class ShareController {
         log.info("分享信息 : {}", JSONObject.toJSONString(list));*/
 
         return "OK";
+    }
+
+    @RequestMapping("/getUser")
+    public IResult getUser(UserDto userDto){
+        List<UserDto> userDtos = userCenterClient.queryUser(userDto);
+
+        return Result.ok(userDtos);
+    }
+
+    @Autowired
+    private BaiduClient baiduClient;
+
+    @GetMapping("/baidu")
+    public String baiduTest(){
+        return baiduClient.index();
     }
 
     @RequestMapping("/{id}")

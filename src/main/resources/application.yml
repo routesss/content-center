@@ -5,7 +5,7 @@ spring:
     nacos:
       discovery:
         #nacos地址
-        server-addr: localhost:8848
+        server-addr: 192.168.0.108:8848
         #指定名称空间
         namespace: 747695a5-8f62-4a66-b93a-fb296f235a3a
         #指定集群名称
@@ -18,6 +18,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/content_center?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: 123456
+  main:
+    allow-bean-definition-overriding: true
 
 server:
   port: 8010
@@ -26,7 +28,6 @@ server:
 logging:
   level:
     root: info
-    com.sola.mybatis_plus_demo.dao.user: trace
     com.sola.contentcenter.feignClicnet.UserCenterClient: debug
   pattern:
     console: '%p%m%n'
@@ -55,3 +56,10 @@ feign:
     config:
       default:
         loggerLevel: full
+  httpclient:
+  #让feign使用apache httpclient做请求；而不是默认的urlconnection
+    enabled: true
+    #配置连接池提上feign性能 feign的最大请求数
+    max-connections: 400
+    #feign单个路径的最大请求数
+    max-connections-per-route: 30

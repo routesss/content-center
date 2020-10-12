@@ -55,6 +55,12 @@
             <version>2.2.5.RELEASE</version>
         </dependency>
 
+        <!--feign默认使用urlconnection连接 配置http连接 spring配置文件进行配置-->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+        </dependency>
+
         <!--mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
