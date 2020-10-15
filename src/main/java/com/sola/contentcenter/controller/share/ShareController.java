@@ -1,6 +1,7 @@
 package com.sola.contentcenter.controller.share;
 
-import com.sola.contentcenter.feignClicnet.BaiduClient;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,12 @@ import com.sola.contentcenter.controller.util.ServiceUriUtil;
 import com.sola.contentcenter.domain.dto.share.ShareDto;
 import com.sola.contentcenter.domain.dto.user.UserDto;
 import com.sola.contentcenter.domain.entity.share.Share;
+import com.sola.contentcenter.feignClicnet.BaiduClient;
 import com.sola.contentcenter.feignClicnet.UserCenterClient;
+import com.sola.contentcenter.service.notice.INoticeService;
 import com.sola.contentcenter.service.share.IShareService;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 /**
  * <p>
@@ -44,6 +45,8 @@ public class ShareController {
     private ServiceUriUtil serviceUriUtil;
     @Autowired
     private UserCenterClient userCenterClient;
+    @Autowired
+    private INoticeService noticeService;
 
     @RequestMapping("/test")
     public String testInsert() {
@@ -65,7 +68,7 @@ public class ShareController {
     }
 
     @RequestMapping("/getUser")
-    public IResult getUser(UserDto userDto){
+    public IResult getUser(UserDto userDto) {
         List<UserDto> userDtos = userCenterClient.queryUser(userDto);
 
         return Result.ok(userDtos);
@@ -75,7 +78,7 @@ public class ShareController {
     private BaiduClient baiduClient;
 
     @GetMapping("/baidu")
-    public String baiduTest(){
+    public String baiduTest() {
         return baiduClient.index();
     }
 
