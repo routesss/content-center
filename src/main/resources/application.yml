@@ -5,7 +5,7 @@ spring:
     nacos:
       discovery:
         #nacos地址
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.0.113:8848
         #指定名称空间
         namespace: 747695a5-8f62-4a66-b93a-fb296f235a3a
         #指定集群名称
@@ -14,6 +14,8 @@ spring:
         metadata:
           instance: SH113
     sentinel:
+      filter:
+        enabled: false
       transport:
         port: 8720
         dashboard: 127.0.0.1:8080
@@ -56,6 +58,9 @@ mybatis-plus:
 
 #feign配置
 feign:
+  sentinel:
+    #为feign整合sentinel
+    enabled: true
   client:
     config:
       default:
