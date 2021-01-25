@@ -15,4 +15,8 @@ import com.sola.contentcenter.domain.entity.share.Share;
 public interface IShareService extends IService<Share> {
 
     Share auditById(Integer id, ShareAuditDTO auditDTO);
+
+    void auditByIdInDB(Integer shareId, ShareAuditDTO auditDTO);
+
+    void auditByIdWithRocketMqLog(Integer shareId, ShareAuditDTO auditDTO, String transactionId);
 }

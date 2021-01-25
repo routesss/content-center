@@ -1,5 +1,6 @@
 package com.sola.contentcenter.controller.share;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -51,18 +52,18 @@ public class ShareController {
     @RequestMapping("/test")
     public String testInsert() {
 
-        /*Share share = new Share();
+        Share share = new Share();
         share.setTitle("芦荟制作手册");
         share.setBuyCount(2);
         share.setCover("XXX");
         share.setCreateTime(LocalDateTime.now());
         share.setUpdateTime(LocalDateTime.now());
-        
+
         shareService.save(share);
-        
+
         List<Share> list = shareService.list();
         System.out.println(JSONObject.toJSONString(list));
-        log.info("分享信息 : {}", JSONObject.toJSONString(list));*/
+        log.info("分享信息 : {}", JSONObject.toJSONString(list));
 
         return "OK";
     }

@@ -1,4 +1,4 @@
-package com.sola.contentcenter.service.impl.notice;
+package com.sola.contentcenter.service.notice.impl;
 
 import org.springframework.stereotype.Service;
 
