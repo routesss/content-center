@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sola.contentcenter.annotation.Authentication;
 import com.sola.contentcenter.controller.util.IResult;
 import com.sola.contentcenter.controller.util.Result;
 import com.sola.contentcenter.controller.util.ServiceUriUtil;
@@ -69,6 +70,7 @@ public class ShareController {
     }
 
     @RequestMapping("/getUser")
+    @Authentication
     public IResult getUser(UserDto userDto) {
         List<UserDto> userDtos = userCenterClient.queryUser(userDto);
 
